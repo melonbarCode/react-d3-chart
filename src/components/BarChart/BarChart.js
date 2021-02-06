@@ -10,13 +10,6 @@ import {
 } from "d3";
 import data from "./population.csv";
 import styled from "styled-components";
-// json(pa).then((data) => {
-//   console.log("data", data);
-// });
-
-// csv('https://vizhub.com/curran/datasets/temperature-in-san-francisco.csv').then((data) => {
-//   console.log("data", data);
-// });
 
 const BarChart = (props) => {
   const barChartRef = useRef(null);
@@ -27,10 +20,11 @@ const BarChart = (props) => {
     // });
 
     const svg = select(barChartRef.current);
-    console.log(svg.attr("width"));
-    const width = +svg.attr("width");
-    const height = +svg.attr("height");
-    const margin = { top: 20, right: 20, bottom: 20, left: 50 };
+    const width = barChartRef.current.clientWidth; //+svg.attr("width");
+    const height = barChartRef.current.clientHeight; //+svg.attr("height");
+
+    console.log(width, height);
+    const margin = { top: 20, right: 20, bottom: 20, left: 100 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const xValue = (d) => d.population;
@@ -77,11 +71,8 @@ const BarChart = (props) => {
   }, []);
 
   return (
-    <BarChartStyledWrapper
-      className="barchart-section"
-      style={{ width: "1000px", height: "800px" }}
-    >
-      <svg width={1000} height={800} ref={barChartRef}></svg>
+    <BarChartStyledWrapper className="barchart-section">
+      <svg className="barchart-svg" ref={barChartRef}></svg>
     </BarChartStyledWrapper>
   );
 };
@@ -89,9 +80,15 @@ const BarChart = (props) => {
 export default BarChart;
 
 const BarChartStyledWrapper = styled.div`
-  .barchart-section {
-    margin: 0px;
-    overflow: hidden;
+  margin: 0px auto;
+  overflow: hidden;
+  height: 900px;
+  width: 1600px;
+  text-align: center;
+
+  .barchart-svg {
+    width: 100%;
+    height: 100%;
   }
 
   rect {
