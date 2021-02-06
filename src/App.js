@@ -1,4 +1,5 @@
 import BarChart from "./components/BarChart";
+import BarChartCustom from "./components/BarChartCustom";
 import "./styles/App.scss";
 
 function App() {
@@ -8,6 +9,8 @@ function App() {
       <div>
         <div className="chart-title">BAR CHART</div>
         <BarChart />
+        <div className="chart-title">BAR CUSTOM CHART</div>
+        <BarChartCustom />
       </div>
     </div>
   );
