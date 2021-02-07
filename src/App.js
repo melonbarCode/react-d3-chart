@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./styles/App.scss";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
+import LineChart from "./components/LineChart";
 
 function App() {
   return (
@@ -14,6 +15,17 @@ function App() {
         <Navbar />
         <div>
           <Switch>
+            <Route
+              path={`${process.env.PUBLIC_URL}/line-chart`}
+              component={(props) => {
+                return (
+                  <>
+                    <div className="chart-title">LINE CHART</div>
+                    <LineChart />
+                  </>
+                );
+              }}
+            />
             <Route
               path={`${process.env.PUBLIC_URL}/bar-chart`}
               exact

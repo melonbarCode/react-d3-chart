@@ -7,11 +7,14 @@ import {
   axisBottom,
   format,
   extent,
+  scaleTime,
+  line,
+  curveBasis,
 } from "d3";
 import data from "../../data/population.csv";
 import styled from "styled-components";
 
-const ScatterChart = (props) => {
+const LineChart = (props) => {
   const barChartRef = useRef(null);
 
   useEffect(() => {
@@ -30,21 +33,21 @@ const ScatterChart = (props) => {
       const width = barChartRef.current.clientWidth; //+svg.attr("width");
       const height = barChartRef.current.clientHeight; //+svg.attr("height");
 
-      const title = "자동차 무게에 따른 마력 Scatter Chart";
+      const title = "샌프란시스코 시간별 온도";
 
-      const xAxisLabel = "마력";
-      const yAxisLabel = "무게";
+      const xAxisLabel = "시간";
+      const yAxisLabel = "온도";
 
       const margin = { top: 100, right: 20, bottom: 80, left: 200 };
       const innerWidth = width - margin.left - margin.right;
       const innerHeight = height - margin.top - margin.bottom;
 
-      const xValue = (d) => d.horsepower;
-      const yValue = (d) => d.weight;
+      const xValue = (d) => d.timestamp;
+      const yValue = (d) => d.temperature;
 
       const circleRadius = 18;
 
-      const xScale = scaleLinear()
+      const xScale = scaleTime()
         .domain(extent(data, xValue))
         .range([0, innerWidth])
         .nice();
@@ -100,42 +103,49 @@ const ScatterChart = (props) => {
         .attr("fill", "#000000")
         .text(xAxisLabel);
 
-      g.selectAll("circle")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("cy", (d) => yScale(yValue(d)))
-        .attr("cx", (d) => xScale(xValue(d)))
-        .attr("r", circleRadius);
+      // g.selectAll("circle")
+      //   .data(data)
+      //   .enter()
+      //   .append("circle")
+      //   .attr("cy", (d) => yScale(yValue(d)))
+      //   .attr("cx", (d) => xScale(xValue(d)))
+      //   .attr("r", circleRadius);
+
+      const lineGenerator = line()
+        .x((d) => xScale(xValue(d)))
+        .y((d) => yScale(yValue(d)))
+        .curve(curveBasis);
+
+      g.append("path")
+        .attr("class", "line-path")
+        .attr("d", lineGenerator(data));
 
       g.append("text").attr("class", "title").attr("y", -50).text(title);
     };
 
-    csv("https://vizhub.com/curran/datasets/auto-mpg.csv").then((data) => {
+    //     temperature: "23.9516625615764"
+    // timestamp: "2015-03-20T21:00:00.000Z"
+    csv(
+      "https://vizhub.com/curran/datasets/temperature-in-san-francisco.csv"
+    ).then((data) => {
       data.forEach((d) => {
-        d.acceleration = +d.acceleration;
-        d.cylinders = +d.cylinders;
-        d.displacement = +d.displacement;
-        d.horsepower = +d.horsepower;
-        d.mpg = +d.mpg;
-        d.weight = +d.weight;
-        d.year = +d.year;
+        d.temperature = +d.temperature;
+        d.timestamp = new Date(d.timestamp);
       });
-
       render(data);
     });
   }, []);
 
   return (
-    <ScatterChartStyledWrapper className="barchart-section">
+    <LineChartStyledWrapper className="barchart-section">
       <svg className="barchart-svg" ref={barChartRef}></svg>
-    </ScatterChartStyledWrapper>
+    </LineChartStyledWrapper>
   );
 };
 
-export default ScatterChart;
+export default LineChart;
 
-const ScatterChartStyledWrapper = styled.div`
+const LineChartStyledWrapper = styled.div`
   margin: 0px auto;
   overflow: hidden;
   height: 900px;
@@ -149,8 +159,15 @@ const ScatterChartStyledWrapper = styled.div`
   }
 
   circle {
-    fill: steelblue;
+    fill: darkgreen;
     opacity: 0.5;
+  }
+
+  .line-path {
+    fill: none;
+    stroke: maroon;
+    stroke-width: 5;
+    stroke-linejoin: round;
   }
 
   text {

@@ -6,6 +6,9 @@ const Navbar = (props) => {
   return useMemo(
     () => (
       <NavbarStyledWrapper>
+        <Link className="link-item" to={`${process.env.PUBLIC_URL}/line-chart`}>
+          LINE CHART
+        </Link>
         <Link className="link-item" to={`${process.env.PUBLIC_URL}/`}>
           SCATTER CHART
         </Link>
