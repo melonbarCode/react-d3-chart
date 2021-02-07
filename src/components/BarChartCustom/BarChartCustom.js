@@ -20,7 +20,6 @@ const BarChartCustom = (props) => {
     //   console.log("data", data);
     // });
 
-    
     const render = (data) => {
       const svg = select(barChartRef.current);
       const width = barChartRef.current.clientWidth; //+svg.attr("width");

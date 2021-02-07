@@ -4,6 +4,7 @@ import ScatterChart from "./components/ScatterChart";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./styles/App.scss";
 import Navbar from "./components/Navbar";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <div>
           <Switch>
             <Route
-              path="/bar-chart"
+              path={`${process.env.PUBLIC_URL}/bar-chart`}
               exact
               component={(props) => {
                 return (
@@ -28,7 +29,7 @@ function App() {
               }}
             />
             <Route
-              path="/"
+              path={`${process.env.PUBLIC_URL}/`}
               component={(props) => {
                 return (
                   <>
@@ -39,12 +40,7 @@ function App() {
               }}
             />
           </Switch>
-          {/* <div className="chart-title">BAR CHART</div>
-        <BarChart />
-        <div className="chart-title">BAR CUSTOM CHART</div>
-        <BarChartCustom />
-        <div className="chart-title">SCATTER CHART</div>
-        <ScatterChart /> */}
+          {/* <LoadingSpinner /> */}
         </div>
       </div>
     </Router>

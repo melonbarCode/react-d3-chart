@@ -6,10 +6,10 @@ const Navbar = (props) => {
   return useMemo(
     () => (
       <NavbarStyledWrapper>
-        <Link className="link-item" to={"/scatter-chart"}>
+        <Link className="link-item" to={`${process.env.PUBLIC_URL}/`}>
           SCATTER CHART
         </Link>
-        <Link className="link-item" to={"/bar-chart"}>
+        <Link className="link-item" to={`${process.env.PUBLIC_URL}/bar-chart`}>
           BAR CHART
         </Link>
       </NavbarStyledWrapper>
@@ -23,9 +23,11 @@ export default Navbar;
 const NavbarStyledWrapper = styled.div`
   padding: 20px;
   box-sizing: border-box;
-  margin-bottom: 30px;
+  border-bottom: #8e8883 1px solid;
+  margin: 30px;
 
   .link-item {
+    display: inline-block;
     list-style: none;
     font-style: none;
     text-decoration: none;
@@ -36,6 +38,7 @@ const NavbarStyledWrapper = styled.div`
     color: #000000;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
+    border: #8e8883 1px solid;
   }
 
   .link-item:hover {
