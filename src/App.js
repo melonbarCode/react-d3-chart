@@ -6,6 +6,7 @@ import "./styles/App.scss";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
 import LineChart from "./components/LineChart";
+import AreaChart from "./components/AreaChart";
 
 function App() {
   return (
@@ -15,6 +16,17 @@ function App() {
         <Navbar />
         <div>
           <Switch>
+          <Route
+              path={`${process.env.PUBLIC_URL}/area-chart`}
+              component={(props) => {
+                return (
+                  <>
+                    <div className="chart-title">AREA CHART</div>
+                    <AreaChart />
+                  </>
+                );
+              }}
+            />
             <Route
               path={`${process.env.PUBLIC_URL}/line-chart`}
               component={(props) => {

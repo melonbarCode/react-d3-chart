@@ -6,6 +6,12 @@ const Navbar = (props) => {
   return useMemo(
     () => (
       <NavbarStyledWrapper>
+        <Link
+          className="link-item"
+          to={`${process.env.PUBLIC_URL}/area-chart`}
+        >
+          AREA CHART
+        </Link>
         <Link className="link-item" to={`${process.env.PUBLIC_URL}/line-chart`}>
           LINE CHART
         </Link>

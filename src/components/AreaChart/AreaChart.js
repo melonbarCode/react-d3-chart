@@ -10,11 +10,12 @@ import {
   scaleTime,
   line,
   curveBasis,
+  area,
 } from "d3";
 import data from "../../data/population.csv";
 import styled from "styled-components";
 
-const LineChart = (props) => {
+const AreaChart = (props) => {
   const barChartRef = useRef(null);
 
   useEffect(() => {
@@ -60,6 +61,7 @@ const LineChart = (props) => {
       //   format(".3s")(number).replace("G", "B");
 
       const xAxis = axisBottom(xScale)
+        .ticks(7)
         // .tickFormat(xAxisTickFormat)
         .tickSize(-innerHeight)
         .tickPadding(30);
@@ -109,14 +111,15 @@ const LineChart = (props) => {
       //   .attr("cx", (d) => xScale(xValue(d)))
       //   .attr("r", circleRadius);
 
-      const lineGenerator = line()
+      const areaGenerator = area()
         .x((d) => xScale(xValue(d)))
-        .y((d) => yScale(yValue(d)))
+        .y0(innerHeight)
+        .y1((d) => yScale(yValue(d)))
         .curve(curveBasis);
 
       g.append("path")
         .attr("class", "line-path")
-        .attr("d", lineGenerator(data));
+        .attr("d", areaGenerator(data));
 
       g.append("text").attr("class", "title").attr("y", -50).text(title);
     };
@@ -135,15 +138,15 @@ const LineChart = (props) => {
   }, []);
 
   return (
-    <LineChartStyledWrapper className="barchart-section">
+    <AreaChartStyledWrapper className="barchart-section">
       <svg className="barchart-svg" ref={barChartRef}></svg>
-    </LineChartStyledWrapper>
+    </AreaChartStyledWrapper>
   );
 };
 
-export default LineChart;
+export default AreaChart;
 
-const LineChartStyledWrapper = styled.div`
+const AreaChartStyledWrapper = styled.div`
   margin: 0px auto;
   overflow: hidden;
   height: 900px;
@@ -162,10 +165,10 @@ const LineChartStyledWrapper = styled.div`
   }
 
   .line-path {
-    fill: none;
-    stroke: maroon;
+    fill: maroon;
+    /* stroke: maroon;
     stroke-width: 5;
-    stroke-linejoin: round;
+    stroke-linejoin: round; */
   }
 
   text {
