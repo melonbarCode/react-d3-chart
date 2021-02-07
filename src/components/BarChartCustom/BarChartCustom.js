@@ -20,18 +20,16 @@ const BarChartCustom = (props) => {
     //   console.log("data", data);
     // });
 
-    const svg = select(barChartRef.current);
-    const width = barChartRef.current.clientWidth; //+svg.attr("width");
-    const height = barChartRef.current.clientHeight; //+svg.attr("height");
-
-    console.log(width, height);
-    const margin = { top: 100, right: 20, bottom: 80, left: 200 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
-    const xValue = (d) => d.population;
-    const yValue = (d) => d.country;
-
+    
     const render = (data) => {
+      const svg = select(barChartRef.current);
+      const width = barChartRef.current.clientWidth; //+svg.attr("width");
+      const height = barChartRef.current.clientHeight; //+svg.attr("height");
+      const margin = { top: 100, right: 20, bottom: 80, left: 200 };
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+      const xValue = (d) => d.population;
+      const yValue = (d) => d.country;
       const xScale = scaleLinear()
         .domain([0, max(data, xValue)])
         .range([0, innerWidth]);
