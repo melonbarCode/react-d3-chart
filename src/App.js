@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">D3 WITH REACT</header>
+        <header className="App-header">D3 WITH REACT FOR STUDY</header>
         <Navbar />
         <div>
           <Switch>
